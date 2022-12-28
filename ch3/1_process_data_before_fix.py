@@ -1,0 +1,1 @@
+import pandas as pdimport numpy as npnum_states = 50def PROCESSDATA(file_name, int):    global df    df = pd.read_csv(file_name)    df = df.fillna(df.median())    if int > 0:        df = df.sample(int)
