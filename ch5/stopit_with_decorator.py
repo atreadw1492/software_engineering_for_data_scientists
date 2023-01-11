@@ -1,8 +1,7 @@
 
 from stopit import threading_timeoutable as timeoutable
-import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
+from ch4.dataset_class_final import DataSet
 
 @timeoutable()
 def train_model(features, labels):
@@ -12,26 +11,18 @@ def train_model(features, labels):
 
     return forest_model
 
-customer_data = pd.read_csv("../data/customer_churn_data.csv")
-
-train_data,test_data = train_test_split(customer_data, 
-                                        train_size = 0.7,
-                                        random_state = 0)
 
 
-feature_list = ["total_day_minutes", "total_day_calls",
-                "number_customer_service_calls"]
-
-train_features = train_data[feature_list]
-test_features = test_data[feature_list]
-
-train_labels = train_data.churn.map(lambda key: 1 if key == "yes" else 0)
-test_labels = test_data.churn.map(lambda key: 1 if key == "yes" else 0)
-
+customer_obj = DataSet(feature_list = ["total_day_minutes", "total_day_calls",
+                       "number_customer_service_calls"],
+                      file_name = "data/customer_churn_data.csv",
+                      label_col = "churn",
+                      pos_category = "yes"
+                     ) 
 
 forest_model = train_model(timeout = 180, 
-                           features = train_features, 
-                           labels = train_labels)
+                           features = customer_obj.train_features, 
+                           labels = customer_obj.train_labels)
 
 
 # Did code finish running in under 180 seconds (3 minutes)?

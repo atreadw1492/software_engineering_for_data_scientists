@@ -2,25 +2,14 @@
 
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.model_selection import train_test_split
-import pandas as pd
+from ch4.dataset_class_final import DataSet
 
-customer_data = pd.read_csv("../data/customer_churn_data.csv")
-
-train_data,test_data = train_test_split(customer_data, 
-                                        train_size = 0.7,
-                                        random_state = 0)
-
-
-feature_list = ["total_day_minutes", "total_day_calls",
-                "number_customer_service_calls"]
-
-train_features = train_data[feature_list]
-test_features = test_data[feature_list]
-
-train_labels = train_data.churn.map(lambda key: 1 if key == "yes" else 0)
-test_labels = test_data.churn.map(lambda key: 1 if key == "yes" else 0)
-
+customer_obj = DataSet(feature_list = ["total_day_minutes", "total_day_calls",
+                       "number_customer_service_calls"],
+                      file_name = "data/customer_churn_data.csv",
+                      label_col = "churn",
+                      pos_category = "yes"
+                     ) 
 
 
 parameters = {"max_depth":range(2, 8),
@@ -38,4 +27,4 @@ clf = RandomizedSearchCV(GradientBoostingClassifier(),
                          random_state = 0,
                          verbose = 1)
 
-clf.fit(train_features, train_labels)
+clf.fit(customer_obj.train_features, customer_obj.train_labels)
