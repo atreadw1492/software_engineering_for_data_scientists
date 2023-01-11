@@ -26,4 +26,4 @@ gbm_model = GradientBoostingClassifier(learning_rate = 0.1,
                                        min_samples_split = 40,
                                        max_depth = 3)
 
-gbm_model.fit(train_data, train_label)
+gbm_model.fit(train_data, train_labels)
