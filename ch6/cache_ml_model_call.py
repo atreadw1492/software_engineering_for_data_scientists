@@ -28,17 +28,17 @@ end = time.time()
 print("Model training runtime: ", end - start)
 
 
-@lru_cache
+@lru_cache(maxsize=10)
 def get_model_predictions(model, inputs):
     
     
     formatted_inputs = pd.DataFrame.from_dict({"followers": inputs[0], 
-                            "genres": inputs[1]}, orient = "index").transpose()
+                            "num_genres": inputs[1]}, orient = "index").transpose()
     #pd.DataFrame(artists[features].iloc[10]).transpose()
     return model.predict(formatted_inputs)
 
 
-inputs = (3, 2)
+inputs = (2, 4)
 
 start = time.time()
 get_model_predictions(forest_model, inputs)
