@@ -4,7 +4,6 @@ import pandas as pd
 from tqdm import tqdm
 from sklearn.linear_model import SGDClassifier
 
-
 class Chunk_pipeline:
 
     def __init__(self, filename: str, label: str, 
@@ -22,10 +21,8 @@ class Chunk_pipeline:
                             chunksize=self.chunksize,
                             usecols = self.keep_cols)
     
+    @profile
     def train_model(self):
-        
-        #filename = "data/ads_train_data.csv"
-        #fields = ["click", "site_category", "banner_pos"]
         
         data_chunks = self.get_chunks()
       
@@ -64,19 +61,6 @@ class Chunk_pipeline:
     
         self.sgd_model = sgd_model
 
-
-    def get_evaluation_metrics(self):
-    
-        pred_pos = 0
-        actual_pos = 0
-                
-        for frame in tqdm(self.get_chunks()):
-            
-            actual_pos += chunk[self.label].sum()
-            
-            self.sgd_model.predict()
-            
-            pass
         
         
         
@@ -85,6 +69,7 @@ pipeline = Chunk_pipeline(filename = "data/ads_train_data.csv",
                           numeric_signals=["banner_pos"],
                           cat_signals=["site_category"],
                           chunksize=1000000)
+
 pipeline.train_model()
 
 
