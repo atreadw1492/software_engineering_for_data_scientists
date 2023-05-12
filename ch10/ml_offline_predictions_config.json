@@ -1,0 +1,13 @@
+
+
+{
+    "model_filename": "ch9/model_outputs/churn_model.sav",
+    "id_field": "customer_id",
+    "input_filename": "data/customer_sample.csv",
+    "input_database": "data/customers.db",
+    "output_database": "data/customers.db",
+    "output_table": "customer_churn_predictions",
+    "input_features": ["total_day_minutes", "total_day_calls",
+                       "number_customer_service_calls"]
+
+}
